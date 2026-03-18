@@ -25,11 +25,11 @@ export default {
         'pg-text3':     '#6040A0',
         'pg-muted':     '#2A1050',
       },
-      fontFamily: {
-        'cinzel':   ['Cinzel', 'serif'],
-        'rajdhani': ['Rajdhani', 'sans-serif'],
-        'mono':     ['Share Tech Mono', 'monospace'],
-      },
+     fontFamily: {
+  'chakra':   ['Chakra Petch', 'sans-serif'],
+  'rajdhani': ['Rajdhani', 'sans-serif'],
+  'mono':     ['Share Tech Mono', 'monospace'],
+},
     },
   },
   plugins: [],
