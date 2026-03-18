@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
+import Topbar from './components/Topbar'
 import Dashboard from './pages/Dashboard'
 import Roadmap from './pages/Roadmap'
 import Questions from './pages/Questions'
@@ -9,14 +10,17 @@ function App() {
   return (
     <div className="min-h-screen bg-pg-bg">
       <Sidebar />
-      <main className="ml-56 min-h-screen">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/roadmap" element={<Roadmap />} />
-          <Route path="/questions" element={<Questions />} />
-          <Route path="/journal" element={<Journal />} />
-        </Routes>
-      </main>
+      <div className="ml-56 flex flex-col min-h-screen">
+        <Topbar />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/roadmap" element={<Roadmap />} />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/journal" element={<Journal />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   )
 }

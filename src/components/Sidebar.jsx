@@ -21,8 +21,8 @@ function Sidebar() {
         <div className="font-chakra font-bold text-2xl text-pg-text">
           Prep<span className="text-pg-gold">Grid</span>
         </div>
-        <div className="font-mono text-xs text-pg-muted mt-1 tracking-widest">
-          PLACEMENT SPRINT
+        <div className="font-rajdhani font-semibold text-xs text-pg-text3 mt-1 tracking-widest uppercase">
+          Placement Sprint
         </div>
       </div>
 
@@ -48,13 +48,13 @@ function Sidebar() {
         <span className="text-xl">🔥</span>
         <div>
           <div className="font-mono text-lg text-pg-gold leading-none">0</div>
-          <div className="font-mono text-xs text-pg-muted mt-0.5">DAY STREAK</div>
+          <div className="font-mono text-xs text-pg-text3 mt-0.5">DAY STREAK</div>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-2 mt-4">
-        <div className="font-mono text-xs text-pg-muted px-2 mb-2 tracking-widest">
+        <div className="font-mono text-xs text-pg-text3 px-2 mb-2 tracking-widest">
           // NAVIGATE
         </div>
         {navItems.map(item => (
@@ -75,7 +75,7 @@ function Sidebar() {
           </NavLink>
         ))}
 
-        <div className="font-mono text-xs text-pg-muted px-2 mb-2 mt-4 tracking-widest">
+        <div className="font-mono text-xs text-pg-text3 px-2 mb-2 mt-4 tracking-widest">
           // SOCIAL
         </div>
         {bottomItems.map(item => (
@@ -98,7 +98,7 @@ function Sidebar() {
 
       {/* Bottom */}
       <div className="px-4 py-4 border-t border-pg-border">
-        <div className="font-mono text-xs text-pg-muted text-center leading-relaxed">
+        <div className="font-mono text-xs text-pg-text3 text-center leading-relaxed">
           "The struggle to retrieve<br/>builds the memory."
         </div>
       </div>
