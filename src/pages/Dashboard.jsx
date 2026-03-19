@@ -36,10 +36,7 @@ function QuestItem({ icon, name, xp, topic, progress, done, accentColor }) {
         relative bg-pg-bg border border-pg-border rounded-xl p-3 mb-2
         flex items-center gap-3 cursor-pointer
         transition-all duration-200
-        ${done
-          ? 'opacity-35'
-          : 'hover:translate-x-1'
-        }
+        ${done ? 'opacity-35' : 'hover:translate-x-1'}
       `}
       style={{
         borderLeft: `2px solid ${done ? '#1E0A38' : accentColor + '40'}`,
@@ -56,12 +53,9 @@ function QuestItem({ icon, name, xp, topic, progress, done, accentColor }) {
         e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)'
       }}
     >
-      {/* Icon */}
       <div className="w-9 h-9 rounded-lg bg-pg-surface border border-pg-border flex items-center justify-center text-lg flex-shrink-0">
         {done ? '✓' : icon}
       </div>
-
-      {/* Info */}
       <div className="flex-1 min-w-0">
         <div className={`font-rajdhani font-semibold text-sm mb-0.5 ${done ? 'line-through text-pg-muted' : 'text-pg-text2'}`}>
           {name}
@@ -78,8 +72,6 @@ function QuestItem({ icon, name, xp, topic, progress, done, accentColor }) {
           </div>
         )}
       </div>
-
-      {/* Check */}
       <div
         className="w-5 h-5 rounded-md border flex items-center justify-center text-xs flex-shrink-0"
         style={{
@@ -89,6 +81,88 @@ function QuestItem({ icon, name, xp, topic, progress, done, accentColor }) {
         }}
       >
         {done && '✓'}
+      </div>
+    </div>
+  )
+}
+
+function Heatmap() {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const days = Array.from({ length: 28 }, (_, i) => {
+    const d = new Date(today)
+    d.setDate(d.getDate() - (27 - i))
+    return d.toISOString().split('T')[0]
+  })
+
+  const todayStr = today.toISOString().split('T')[0]
+  const studiedDays = []
+
+  const getLevel = (dateStr) => {
+    if (!studiedDays.includes(dateStr)) return 0
+    return Math.floor(Math.random() * 3) + 1
+  }
+
+  const levelColors = {
+    0: 'bg-pg-bg border border-pg-border',
+    1: 'bg-pg-violet/20 border border-pg-violet/30',
+    2: 'bg-pg-violet/50 border border-pg-violet/60',
+    3: 'bg-pg-violet border border-pg-violet',
+  }
+
+  return (
+    <div
+      className="rounded-xl p-5 border border-pg-border2 cursor-pointer transition-all duration-250 hover:-translate-y-1"
+      style={{
+        background: 'linear-gradient(160deg, #160E28 0%, #0A0618 100%)',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.04) inset',
+        borderTop: '1px solid #4A2880',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow = '0 0 0 1px rgba(139,76,255,0.4), 0 12px 32px rgba(0,0,0,0.6), 0 20px 48px rgba(139,76,255,0.2)'
+        e.currentTarget.style.borderColor = 'rgba(139,76,255,0.6)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.04) inset'
+        e.currentTarget.style.borderColor = ''
+      }}
+    >
+      <div className="flex items-center justify-between mb-4">
+        <div className="font-mono text-xs text-pg-text3 tracking-widest flex items-center gap-2">
+          <span className="text-pg-violet/60">▶</span>
+          STUDY ACTIVITY — LAST 4 WEEKS
+        </div>
+        <div className="font-mono text-xs text-pg-text3">
+          {studiedDays.length} days studied
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {days.map((dateStr) => {
+          const level = getLevel(dateStr)
+          const isToday = dateStr === todayStr
+          return (
+            <div
+              key={dateStr}
+              title={dateStr}
+              className={`
+                w-4 h-4 rounded-sm cursor-pointer
+                transition-transform duration-100
+                hover:scale-125
+                ${levelColors[level]}
+                ${isToday ? 'ring-1 ring-pg-gold ring-offset-1 ring-offset-pg-bg' : ''}
+              `}
+            />
+          )
+        })}
+      </div>
+      <div className="flex items-center gap-2 mt-4">
+        <span className="font-mono text-xs text-pg-muted">Less</span>
+        {[0, 1, 2, 3].map(l => (
+          <div key={l} className={`w-2.5 h-2.5 rounded-sm ${levelColors[l]}`}/>
+        ))}
+        <span className="font-mono text-xs text-pg-muted">More</span>
+        <span className="font-mono text-xs text-pg-gold ml-3">◆ today</span>
       </div>
     </div>
   )
@@ -157,7 +231,7 @@ function Dashboard() {
       </div>
 
       {/* Two column layout */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 mb-6">
 
         {/* Active Quests — takes 2 cols */}
         <div
@@ -168,7 +242,6 @@ function Dashboard() {
             borderTop: '1px solid #4A2880',
           }}
         >
-          {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-xs text-pg-text3 tracking-widest flex items-center gap-2">
               <span className="text-pg-violet/60">▶</span>
@@ -178,14 +251,12 @@ function Dashboard() {
               ● 1 / 3 complete
             </div>
           </div>
-
-          {/* Quest items */}
           {QUESTS.map((quest, i) => (
             <QuestItem key={i} {...quest} />
           ))}
         </div>
 
-        {/* Pace card — takes 1 col */}
+        {/* Pace Tracker — takes 1 col */}
         <div
           className="rounded-xl p-5 border border-pg-border2 flex flex-col gap-4"
           style={{
@@ -198,7 +269,6 @@ function Dashboard() {
             <span className="text-pg-violet/60">▶</span>
             PACE TRACKER
           </div>
-
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
               <span className="font-rajdhani text-sm text-pg-text3">Week</span>
@@ -207,7 +277,6 @@ function Dashboard() {
             <div className="h-1.5 bg-pg-bg rounded-full overflow-hidden border border-pg-border">
               <div className="h-full bg-pg-violet rounded-full" style={{ width: '4%' }}/>
             </div>
-
             <div className="flex justify-between items-center mt-2">
               <span className="font-rajdhani text-sm text-pg-text3">Topics</span>
               <span className="font-mono text-xs text-pg-gold">0 / 19</span>
@@ -215,7 +284,6 @@ function Dashboard() {
             <div className="h-1.5 bg-pg-bg rounded-full overflow-hidden border border-pg-border">
               <div className="h-full bg-pg-gold rounded-full" style={{ width: '0%' }}/>
             </div>
-
             <div className="flex justify-between items-center mt-2">
               <span className="font-rajdhani text-sm text-pg-text3">Questions</span>
               <span className="font-mono text-xs text-pg-teal">0 / 245</span>
@@ -224,7 +292,6 @@ function Dashboard() {
               <div className="h-full bg-pg-teal rounded-full" style={{ width: '0%' }}/>
             </div>
           </div>
-
           <div className="mt-auto pt-4 border-t border-pg-border">
             <div className="font-mono text-xs text-pg-text3 mb-1">Status</div>
             <div className="font-rajdhani font-semibold text-pg-teal">
@@ -237,6 +304,10 @@ function Dashboard() {
         </div>
 
       </div>
+
+      {/* Heatmap — full width */}
+      <Heatmap />
+
     </div>
   )
 }
